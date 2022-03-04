@@ -1,20 +1,20 @@
 {
   "name": "express-flare",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "git push && npm publish"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/cookie": "^0.4.1",
     "cookie": "^0.4.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.4.0",
+    "@types/cookie": "^0.4.1",
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0"
   }
