@@ -6,7 +6,11 @@
   "scripts": {
     "tsc": "tsc --project './tsconfig.json'",
     "lint": "eslint src/ && npm run tsc",
-    "release": "npm run lint && git push && npm publish"
+    "release_patch": "npm version patch",
+    "release_minor": "npm version minor",
+    "release_major": "npm version major",
+    "preversion": "npm run lint",
+    "postversion": "git push && git push --tags && npm publish"
   },
   "keywords": [],
   "author": "",
