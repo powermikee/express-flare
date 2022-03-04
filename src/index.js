@@ -95,7 +95,9 @@ const handleRequest = async ({
     }
 
     const response = getResponse();
-    const finalResponse = new Response(response.data, response.headers);
+    const finalResponse = response.redirect
+      ? Response.redirect(response.redirect.url, response.redirect.statusCode)
+      : new Response(response.data, response.headers);
 
     if (cacheTime > 0 && methodLower === 'get') {
       event.waitUntil(cache.put(req, finalResponse.clone()));

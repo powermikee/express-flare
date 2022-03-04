@@ -76,6 +76,14 @@ const res = {
 
     return this;
   },
+  redirect(url, statusCode) {
+    response.redirect = {
+      url,
+      statusCode,
+    };
+
+    return this;
+  },
 };
 
 const resetResponse = () => {
@@ -87,6 +95,7 @@ const resetResponse = () => {
         'content-encoding': 'gzip',
       },
     },
+    redirect: undefined,
   };
 
   return response;

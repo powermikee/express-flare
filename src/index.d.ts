@@ -47,11 +47,13 @@ export interface ResponseMethodType {
   getHeader: (header: string) => ResponseMethodType,
   removeHeader: (header: string) => ResponseMethodType,
   setCookie: (name: string, value: string) => ResponseMethodType,
+  redirect: (url: string, statusCode: number) => ResponseMethodType,
 }
 
 export type NextType = (error?: Error) => void;
 
 export type ResponseType = {
+  redirect?: { url: string, statusCode: number },
   data: string,
   headers: {
     status: number,
@@ -59,7 +61,7 @@ export type ResponseType = {
       [key: string]: any,
     },
     [key: string]: any,
-  }
+  },
 };
 
 export interface RequestType extends Request {
