@@ -20,7 +20,7 @@ export interface HandleRequestType {
     waitUntil: (promise: Promise<undefined>) => void,
     request: RequestType,
   },
-  router: any,
+  router: RouterType,
   cacheTime?: number,
   parseCookie?: boolean,
 }
