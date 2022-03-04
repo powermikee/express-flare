@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "types": [
+      "@cloudflare/workers-types",
+      "./src"
+    ],
+    "target": "es5",
+    "lib": [
+      "es5",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": [
+    "./src/**/*",
+    "**/*.ts"
+  ],
+  "exclude": [
+    "./node_modules/**/*"
+  ]
+}
