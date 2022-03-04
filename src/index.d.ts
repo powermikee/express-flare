@@ -9,6 +9,7 @@ declare global {
 }
 
 export interface RequestType extends Request {
+  origin: string,
   query: any,
   params: any,
   bodyContent: any,

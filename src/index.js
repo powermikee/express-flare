@@ -15,7 +15,7 @@ const handleRequest = async ({
   const { request: req } = event;
   const { url, method } = req;
   const methodLower = method.toLowerCase();
-  const { pathname, search } = new URL(url);
+  const { pathname, search, origin } = new URL(url);
   const { routes } = router;
   const middlewareArr = [...routes.middleware];
   const errorHandler = routes.error;
@@ -38,6 +38,7 @@ const handleRequest = async ({
   const mwCount = middlewareArr.length;
   let mwIndex = 0;
 
+  req.origin = origin;
   req.query = queryparams;
   req.params = params;
   req.bodyContent = methodLower === 'post' ? await getBody(req) : null;
