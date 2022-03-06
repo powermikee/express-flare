@@ -5,7 +5,10 @@ const {
 } = require('./lib/response');
 const routerLib = require('./lib/router');
 
-/** @param { import('./index.d').HandleRequestType } props */
+/**
+ * @param { import('./index.d').HandleRequestType } props
+ * @return Promise<Response>
+ */
 const handleRequest = async ({
   event,
   router,

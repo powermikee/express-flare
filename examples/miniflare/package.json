@@ -1,0 +1,29 @@
+{
+  "name": "miniflare-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.4.0",
+    "@types/cors": "^2.8.12",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "miniflare": "^2.3.0"
+  },
+  "scripts": {
+    "start": "miniflare dist/worker.js --open --live-reload --debug"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cookie": "^0.4.1",
+    "cookie": "^0.4.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "eslint": "^8.10.0",
+    "express-flare": "^1.0.17",
+    "express-jwt": "^6.1.1",
+    "helmet": "^5.0.2"
+  }
+}

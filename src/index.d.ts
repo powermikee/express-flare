@@ -1,4 +1,3 @@
-
 declare global {
   interface CacheStorage {
     default: {
@@ -17,10 +16,7 @@ export interface RequestType extends Request {
 }
 
 export interface HandleRequestType {
-  event: {
-    waitUntil: (promise: Promise<undefined>) => void,
-    request: RequestType,
-  },
+  event: FetchEvent,
   router: RouterType,
   cacheTime?: number,
   parseCookie?: boolean,
@@ -110,6 +106,6 @@ export type EndpointType = (
   patch: EndpointType,
 }
 
-export function handleRequest (props: HandleRequestType): void;
+export function handleRequest (props: HandleRequestType): Promise<Response>;
 
 export const router: RouterType;

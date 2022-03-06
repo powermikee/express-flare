@@ -1,0 +1,9 @@
+name = "miniflare-example"
+type = "webpack"
+webpack_config = "webpack.config.js"
+route = ''
+zone_id = ''
+usage_model = ''
+compatibility_flags = []
+workers_dev = true
+compatibility_date = "2022-03-01"
