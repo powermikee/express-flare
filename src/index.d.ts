@@ -1,9 +1,6 @@
 declare global {
   interface CacheStorage {
-    default: {
-      put(request: Request | string, response: Response): Promise<undefined>;
-      match(request: Request | string): Promise<Response | undefined>;
-    };
+    default: Cache;
   }
 }
 
