@@ -88,14 +88,14 @@ const handleRequest = async ({
           return cachedResponse;
         }
 
-        await callback(req, res);
+        await callback(req, res, event);
       }
     } else {
       if (cacheTime > 0 && cachedResponse) {
         return cachedResponse;
       }
 
-      await callback(req, res);
+      await callback(req, res, event);
     }
 
     const response = getResponse();
