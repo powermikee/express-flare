@@ -8,11 +8,11 @@ declare global {
 }
 
 export interface RequestType extends Request {
-  origin: string,
-  query: any,
-  params: any,
-  bodyContent: any,
-  cookies: any,
+  origin?: string,
+  query?: any,
+  params?: any,
+  bodyContent?: any,
+  cookies?: any,
 }
 
 interface FetchEventType extends FetchEvent {
