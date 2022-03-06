@@ -1,6 +1,6 @@
 declare global {
   interface CacheStorage {
-    default: Cache;
+    readonly default: Cache;
   }
 }
 

@@ -3,6 +3,7 @@
     "strict": true,
     "types": [
       "@cloudflare/workers-types",
+      "@types/cookie",
       "./src"
     ],
     "target": "es5",
