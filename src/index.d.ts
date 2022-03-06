@@ -15,8 +15,12 @@ export interface RequestType extends Request {
   cookies: any,
 }
 
+interface FetchEventType extends FetchEvent {
+  request: RequestType,
+}
+
 export interface HandleRequestType {
-  event: FetchEvent,
+  event: FetchEventType,
   router: RouterType,
   cacheTime?: number,
   parseCookie?: boolean,
