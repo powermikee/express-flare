@@ -1,4 +1,4 @@
-import { handleRequest, router } from '../../../src/index';
+import { handleRequest, router } from 'express-flare';
 
 router.use((req, res, next) => {
   console.log('First middleware');

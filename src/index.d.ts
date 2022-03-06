@@ -7,14 +7,6 @@ declare global {
   }
 }
 
-export interface RequestType extends Request {
-  origin?: string,
-  query?: any,
-  params?: any,
-  bodyContent?: any,
-  cookies?: any,
-}
-
 interface FetchEventType extends FetchEvent {
   request: RequestType,
 }
@@ -25,19 +17,6 @@ export interface HandleRequestType {
   cacheTime?: number,
   parseCookie?: boolean,
 }
-
-export interface RouterType {
-  routes: RoutesType,
-  use: (callback: CallbackType) => void,
-  error: (callback: ErrorCallbackType) => void,
-  get: EndpointType,
-  post: EndpointType,
-  put: EndpointType,
-  delete: EndpointType,
-  patch: EndpointType,
-}
-
-export type NextType = (error?: Error) => void;
 
 export interface ResponseMethodType {
   status: (statusCode: number) => ResponseMethodType,
@@ -66,10 +45,11 @@ export type ResponseType = {
 };
 
 export interface RequestType extends Request {
-  query: any,
-  params: any,
-  bodyContent: any,
-  cookies: any,
+  origin?: string,
+  query?: any,
+  params?: any,
+  bodyContent?: any,
+  cookies?: any,
 }
 
 export type ErrorCallbackType = (
@@ -99,10 +79,10 @@ export type EndpointType = (
   [key: string]: any,
  }
 
- export type RouterType = {
+ export interface RouterType {
   routes: RoutesType,
   use: (callback: CallbackType) => void,
-  error: ErrorCallbackType,
+  error: (callback: ErrorCallbackType) => void,
   get: EndpointType,
   post: EndpointType,
   put: EndpointType,

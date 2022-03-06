@@ -37,6 +37,6 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
-    "express-flare": "^1.0.18"
+    "express-flare": "^1.0.19"
   }
 }
