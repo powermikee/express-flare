@@ -47,6 +47,7 @@ export interface RequestType extends Request {
   params?: any,
   bodyContent?: any,
   cookies?: any,
+  [key: string]: any,
 }
 
 export type ErrorCallbackType = (
@@ -73,6 +74,7 @@ export type EndpointType = (
   put: object,
   delete: object,
   patch: object,
+  all: object,
   [key: string]: any,
  }
 
@@ -85,6 +87,7 @@ export type EndpointType = (
   put: EndpointType,
   delete: EndpointType,
   patch: EndpointType,
+  all: EndpointType,
 }
 
 export function handleRequest (props: HandleRequestType): Promise<Response>;

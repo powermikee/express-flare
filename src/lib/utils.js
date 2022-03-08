@@ -61,7 +61,7 @@ const getQueryParams = (searchQuery) => {
  * @param {string} pathname
  * @returns
  */
-const getRoute = (routesObj, pathname) => {
+const checkRoute = (routesObj, pathname) => {
   const routes = Object.keys(routesObj);
   const pathArr = pathname.replace(/\/$/, '').split('/');
   /** @type {{[key: string]: any}} */
@@ -69,24 +69,22 @@ const getRoute = (routesObj, pathname) => {
   /** @type {any} */
   let matchingPath = null;
 
-  // exact route
-  if (routes.includes(pathname)) {
-    const { callback, cacheTime, middleware } = routesObj[pathname];
-
-    return {
-      pathMatch: true,
-      callback,
-      params,
-      middleware,
-      cacheTime,
-    };
-  }
-
   routes.forEach((route) => {
     const routeArr = route.replace(/\/$/, '').split('/');
 
-    // filter out any exact paths and paths with the wrong length
-    if (!matchingPath && route.indexOf('/:') > -1 && routeArr.length === pathArr.length) {
+    if (route === pathname) {
+      const { callback, cacheTime, middleware } = routesObj[pathname];
+
+      matchingPath = {
+        pathMatch: true,
+        callback,
+        params,
+        middleware,
+        cacheTime,
+      };
+    } else if (!matchingPath && route.indexOf('/:') > -1 && routeArr.length === pathArr.length) {
+      const { callback, cacheTime, middleware } = routesObj[pathname];
+
       for (let i = 0; i < routeArr.length; i += 1) {
         const routePart = routeArr[i];
         const pathPart = pathArr[i];
@@ -102,8 +100,6 @@ const getRoute = (routesObj, pathname) => {
         }
 
         if (i === (routeArr.length - 1)) {
-          const { callback, cacheTime, middleware } = routesObj[route];
-
           matchingPath = {
             pathMatch: true,
             callback,
@@ -113,12 +109,23 @@ const getRoute = (routesObj, pathname) => {
           };
         }
       }
+    } else if (route === '/*' || route === '*') {
+      const { callback, cacheTime, middleware } = routesObj['*'];
+
+      matchingPath = {
+        pathMatch: true,
+        callback,
+        params,
+        cacheTime,
+        middleware,
+      };
     }
   });
 
   if (matchingPath) {
     return matchingPath;
   }
+
   return {
     pathMatch: false,
     callback: null,
@@ -128,8 +135,25 @@ const getRoute = (routesObj, pathname) => {
   };
 };
 
+/**
+ * @param {{[key: string]: any}} routes
+ * @param {string} method
+ * @param {string} pathname
+ * @returns
+ */
+const getRoute = (routes, method, pathname) => {
+  let route = checkRoute(routes[method], pathname);
+
+  if (!route.pathMatch && Object.keys(routes.all).length) {
+    route = checkRoute(routes.all, pathname);
+  }
+
+  return route;
+};
+
 module.exports = {
   getQueryParams,
   getBody,
+  checkRoute,
   getRoute,
 };

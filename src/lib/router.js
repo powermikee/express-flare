@@ -9,6 +9,7 @@ const routes = {
   put: {},
   delete: {},
   patch: {},
+  all: {},
 };
 
 /** @param { CallbackType } callback */
@@ -23,6 +24,19 @@ const error = (callback) => {
   routes.error = callback;
 };
 
+/** @param {string} path */
+const getCleanPath = (path) => {
+  if (path === '/*') {
+    return '*';
+  }
+
+  if (path !== '*' && !path.startsWith('/')) {
+    return `/${path}`;
+  }
+
+  return path;
+};
+
 /** @param {string} method */
 const methodBuilder = (method) => {
   /**
@@ -32,11 +46,12 @@ const methodBuilder = (method) => {
    * @param { number } [arg3]
   */
   return (path, arg1, arg2, arg3) => {
+    const cleanPath = getCleanPath(path);
     const middleware = typeof arg2 === 'function' ? arg1 : null;
     const callback = typeof arg2 === 'function' ? arg2 : arg1;
     const cacheTime = typeof arg2 === 'function' ? arg3 : arg2;
 
-    routes[method][path] = {
+    routes[method][cleanPath] = {
       callback,
       middleware,
       cacheTime,
@@ -54,6 +69,7 @@ const router = {
   put: methodBuilder('put'),
   delete: methodBuilder('delete'),
   patch: methodBuilder('patch'),
+  all: methodBuilder('all'),
 };
 
 module.exports = router;

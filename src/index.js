@@ -31,7 +31,7 @@ const handleRequest = async ({
     params,
     cacheTime: routeCacheTime,
     middleware,
-  } = getRoute(routes[methodLower], pathname);
+  } = getRoute(routes, methodLower, pathname);
   const cacheTime = typeof routeCacheTime !== 'undefined' ? routeCacheTime : globalCacheTime;
 
   if (middleware) {
