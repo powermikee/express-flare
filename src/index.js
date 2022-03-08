@@ -11,12 +11,13 @@ const routerLib = require('./lib/router');
  */
 const handleRequest = async ({
   event,
+  request,
   router,
   cacheTime: globalCacheTime = 0,
   parseCookie = true,
   context = null,
 }) => {
-  const { request: req } = event;
+  const req = request || event.request;
   const eventObj = context || event;
   const { url, method } = req;
   const methodLower = method.toLowerCase();
