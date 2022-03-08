@@ -14,8 +14,10 @@ const handleRequest = async ({
   router,
   cacheTime: globalCacheTime = 0,
   parseCookie = true,
+  context = null,
 }) => {
   const { request: req } = event;
+  const eventObj = context || event;
   const { url, method } = req;
   const methodLower = method.toLowerCase();
   const { pathname, search, origin } = new URL(url);
@@ -88,14 +90,14 @@ const handleRequest = async ({
           return cachedResponse;
         }
 
-        await callback(req, res, event);
+        await callback(req, res, eventObj);
       }
     } else {
       if (cacheTime > 0 && cachedResponse) {
         return cachedResponse;
       }
 
-      await callback(req, res, event);
+      await callback(req, res, eventObj);
     }
 
     const response = getResponse();
@@ -104,7 +106,7 @@ const handleRequest = async ({
       : new Response(response.data, response.headers);
 
     if (cacheTime > 0 && methodLower === 'get') {
-      event.waitUntil(cache.put(req, finalResponse.clone()));
+      eventObj.waitUntil(cache.put(req, finalResponse.clone()));
     }
 
     return finalResponse;
