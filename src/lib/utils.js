@@ -83,8 +83,6 @@ const checkRoute = (routesObj, pathname) => {
         cacheTime,
       };
     } else if (!matchingPath && route.indexOf('/:') > -1 && routeArr.length === pathArr.length) {
-      const { callback, cacheTime, middleware } = routesObj[pathname];
-
       for (let i = 0; i < routeArr.length; i += 1) {
         const routePart = routeArr[i];
         const pathPart = pathArr[i];
@@ -100,6 +98,8 @@ const checkRoute = (routesObj, pathname) => {
         }
 
         if (i === (routeArr.length - 1)) {
+          const { callback, cacheTime, middleware } = routesObj[route];
+
           matchingPath = {
             pathMatch: true,
             callback,

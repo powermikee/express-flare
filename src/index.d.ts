@@ -9,9 +9,9 @@ interface FetchEventType extends FetchEvent {
 }
 
 export interface HandleRequestType {
-  event: FetchEventType,
-  context: any,
-  request: any,
+  event?: FetchEventType,
+  context?: any,
+  request?: any,
   router: RouterType,
   cacheTime?: number,
   parseCookie?: boolean,
