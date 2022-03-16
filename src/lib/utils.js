@@ -144,7 +144,10 @@ const checkRoute = (routesObj, pathname) => {
  * @returns
  */
 const getRoute = (routes, method, pathname) => {
-  let route = checkRoute(routes[method], pathname);
+  // handle head requests
+  const realMethod = method === 'head' ? 'get' : method;
+
+  let route = checkRoute(routes[realMethod], pathname);
 
   if (!route.pathMatch && Object.keys(routes.all).length) {
     route = checkRoute(routes.all, pathname);
