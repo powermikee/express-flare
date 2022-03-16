@@ -187,11 +187,18 @@ router.get('/test', async (req, res) => {
 });
 ```
 
-### res.setCookie(name: string, value: string):
+### res.setCookie(name: string, value: string, options: object):
 
 ```js
 router.get('/test', async (req, res) => {
   res.setCookie('name', 'value');
+});
+
+router.get('/another', async (req, res) => {
+  res.setCookie('name', 'value', {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7 // 1 week
+  });
 });
 ```
 
@@ -246,7 +253,69 @@ Set cookie:
 router.get('/test', async (req, res) => {
   res.setCookie('name', 'value').send('Success!');
 });
+
+router.get('/test', async (req, res) => {
+  res.setCookie('name', 'value', {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7 // 1 week
+  }).send('Success!');
+});
 ```
+
+```express-flare``` uses the cookie package internally:
+
+https://www.npmjs.com/package/cookie
+
+Setting cookies has the following options:
+
+**domain: string**
+
+Specifies the value for the Domain Set-Cookie attribute. By default, no domain is set, and most clients will consider the cookie to apply to only the current domain.
+
+**encode: function**
+
+Specifies a function that will be used to encode a cookie's value. Since value of a cookie has a limited character set (and must be a simple string), this function can be used to encode a value into a string suited for a cookie's value.
+
+The default function is the global encodeURIComponent, which will encode a JavaScript string into UTF-8 byte sequences and then URL-encode any that fall outside of the cookie range.
+
+**expires: Date**
+
+Specifies the Date object to be the value for the Expires Set-Cookie attribute. By default, no expiration is set, and most clients will consider this a "non-persistent cookie" and will delete it on a condition like exiting a web browser application.
+
+note the cookie storage model specification states that if both expires and maxAge are set, then maxAge takes precedence, but it is possible not all clients by obey this, so if both are set, they should point to the same date and time.
+
+**httpOnly: boolean**
+Specifies the boolean value for the HttpOnly Set-Cookie attribute. When truthy, the HttpOnly attribute is set, otherwise it is not. By default, the HttpOnly attribute is not set.
+
+note be careful when setting this to true, as compliant clients will not allow client-side JavaScript to see the cookie in document.cookie.
+
+**maxAge: number**
+Specifies the number (in seconds) to be the value for the Max-Age Set-Cookie attribute. The given number will be converted to an integer by rounding down. By default, no maximum age is set.
+
+note the cookie storage model specification states that if both expires and maxAge are set, then maxAge takes precedence, but it is possible not all clients by obey this, so if both are set, they should point to the same date and time.
+
+**path: string**
+
+Specifies the value for the Path Set-Cookie attribute. By default, the path is considered the "default path".
+
+**sameSite: boolean**
+
+Specifies the boolean or string to be the value for the SameSite Set-Cookie attribute.
+
+true will set the SameSite attribute to Strict for strict same site enforcement.
+false will not set the SameSite attribute.
+'lax' will set the SameSite attribute to Lax for lax same site enforcement.
+'none' will set the SameSite attribute to None for an explicit cross-site cookie.
+'strict' will set the SameSite attribute to Strict for strict same site enforcement.
+More information about the different enforcement levels can be found in the specification.
+
+note This is an attribute that has not yet been fully standardized, and may change in the future. This also means many clients may ignore this attribute until they understand it.
+
+**secure: boolean**
+
+Specifies the boolean value for the Secure Set-Cookie attribute. When truthy, the Secure attribute is set, otherwise it is not. By default, the Secure attribute is not set.
+
+note be careful when setting this to true, as compliant clients will not send the cookie back to the server in the future if the browser does not have an HTTPS connection.
 
 ## Middleware
 
@@ -331,6 +400,8 @@ router.use((req, res, next) => {
 Express-flare has a dedicated global error handler. 
 
 **Note: You can only have one global error handler.**
+
+The error handler will be called as soon as the error is thrown and won't go to the next middleware unless you call ```next()```.
 
 ```js
 router.error((err, req, res, next) => {

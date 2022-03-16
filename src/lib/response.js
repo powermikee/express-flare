@@ -1,3 +1,5 @@
+const { serialize } = require('cookie');
+
 /** @typedef { import('../index.d').ResponseMethodType } ResponseMethodType */
 /** @typedef { import('../index.d').ResponseType } ResponseType */
 
@@ -69,9 +71,9 @@ const res = {
 
     return this;
   },
-  setCookie(name, value) {
+  setCookie(name, value, options) {
     updateHeaders({
-      'Set-Cookie': `${name}=${value}`,
+      'Set-Cookie': serialize(name, value, options),
     });
 
     return this;

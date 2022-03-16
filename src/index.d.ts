@@ -1,3 +1,5 @@
+import { CookieSerializeOptions } from 'cookie';
+
 declare global {
   interface CacheStorage {
     readonly default: Cache;
@@ -26,7 +28,7 @@ export interface ResponseMethodType {
   setHeader: (header: string, value: string) => ResponseMethodType,
   getHeader: (header: string) => ResponseMethodType,
   removeHeader: (header: string) => ResponseMethodType,
-  setCookie: (name: string, value: string) => ResponseMethodType,
+  setCookie: (name: string, value: string, options: CookieSerializeOptions) => ResponseMethodType,
   redirect: (url: string, statusCode: number) => ResponseMethodType,
 }
 
