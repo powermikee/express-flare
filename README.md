@@ -325,6 +325,25 @@ router.use((req, res, next) => {
 });
 ```
 
+### Error handling
+Express-flare has a dedicated global error handler. 
+
+**Note: You can only have one global error handler.**
+
+```js
+router.error((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send('invalid token...');
+  }
+
+  next();
+});
+
+router.get('/', (req, res) => {
+  res.json({ success: true });
+});
+```
+
 ### Thirdparty middleware
 
 Express-flare has been tested with several express middleware plugins.
