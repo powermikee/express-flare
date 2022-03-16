@@ -284,10 +284,10 @@ router.use((req, res, next) => {
   console.log('Second');
 
   if(!req.user) {
-    res.status(400).send('No user found!');
-  } else {
-    next();
+    return res.status(400).send('No user found!');
   }
+    
+  next();
 });
 
 router.get('/', (req, res) => {
@@ -335,7 +335,7 @@ Express-flare has a dedicated global error handler.
 ```js
 router.error((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send('invalid token...');
+    return res.status(401).send('invalid token...');
   }
 
   next();
@@ -406,10 +406,10 @@ router.all('*', (req, res) => {
 // for more specific filtering
 router.all('*', (req, res) => {
   if(req.pathname.startsWith('/help') && req.method === 'POST') {
-    req.json({ success: false });
-  } else {
-    res.json({ success: true });
+    return req.json({ success: false });
   }
+
+  res.json({ success: true });
 });
 ```
 
@@ -508,7 +508,7 @@ router.get('/test', async (req, res) => {
   const { env, context } = req;
 
   if(!env.JWT) {
-    res.json({ allowed: false });
+    return res.json({ allowed: false });
   }
 
   res.json({ success: true });
