@@ -48,7 +48,7 @@ const handleRequest = async ({
   req.origin = origin;
   req.query = queryparams;
   req.params = params;
-  req.bodyContent = methodLower === 'post' ? await getBody(req) : null;
+  req.bodyContent = methodLower === 'post' || methodLower === 'put' ? await getBody(req) : null;
   req.event = event;
   req.context = context;
   req.env = env;
@@ -65,7 +65,13 @@ const handleRequest = async ({
 
   let middlewareDone = false;
 
-  const setMiddleWareDone = () => {
+  const setMiddleWareDone = async (error) => {
+    if (error && errorHandler) {
+      await errorHandler(error, req, res, setMiddleWareDone);
+
+      return false;
+    }
+
     middlewareDone = true;
   };
 

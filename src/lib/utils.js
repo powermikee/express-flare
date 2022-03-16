@@ -109,21 +109,23 @@ const checkRoute = (routesObj, pathname) => {
           };
         }
       }
-    } else if (route === '/*' || route === '*') {
-      const { callback, cacheTime, middleware } = routesObj['*'];
-
-      matchingPath = {
-        pathMatch: true,
-        callback,
-        params,
-        cacheTime,
-        middleware,
-      };
     }
   });
 
   if (matchingPath) {
     return matchingPath;
+  }
+
+  if (!matchingPath && typeof routesObj['*'] !== 'undefined') {
+    const { callback, cacheTime, middleware } = routesObj['*'];
+
+    return {
+      pathMatch: true,
+      callback,
+      params,
+      cacheTime,
+      middleware,
+    };
   }
 
   return {
