@@ -4,7 +4,7 @@
 
 Cloudflare Workers are absolutely incredible!
 
-One of the hardest things of building in workers though is handling API routes.
+One of the most complex things of building in workers is handling API routes.
 
 ```Express-flare``` was created to fill in the gaps and make creating APIs in cloudflare workers a joy.
 

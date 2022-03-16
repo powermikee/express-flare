@@ -16,6 +16,14 @@
   ],
   "author": "Powermikee",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/powermikee/express-flare.git"
+  },
+  "bugs": {
+    "url": "https://github.com/powermikee/express-flare/issues"
+  },
+  "homepage": "https://github.com/powermikee/express-flare#readme",
   "scripts": {
     "tsc": "tsc --project './tsconfig.json'",
     "lint": "eslint src/",
