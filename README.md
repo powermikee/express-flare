@@ -252,7 +252,7 @@ Express-flare has full support for express style middleware.
 
 ### Global middleware
 
-**Note:** when you call ```router.use()``` you must call ```next()``` or return a response ```res.send()``` or your routing will fail.
+**Note:** when you call ```router.use()``` you must call ```next()``` or return a response eg. ```res.send()``` or your routing will fail.
 
 ```js
 router.use((req, res, next) => {
@@ -327,7 +327,7 @@ router.use((req, res, next) => {
 
 ### Thirdparty middleware
 
-Express-flare has been testing with several express middleware plugins.
+Express-flare has been tested with several express middleware plugins.
 
 Example:
 
@@ -354,7 +354,7 @@ router.get('/', (req, res) => {
 app.get('/protected', jwt({ 
   secret: 'shhhhhhared-secret', 
   algorithms: ['HS256'],
-}), function(req, res) {
+}), (req, res) => {
   if (!req.user.admin) {
     return res.status(401).send('Failed');
   }
@@ -365,7 +365,7 @@ app.get('/protected', jwt({
 
 ## Wildcard routes
 
-Express-flare only support the top level wildcard routes with ```*``` but not for example ```/stores/*```.
+Express-flare only supports the top level wildcard routes with ```*``` but not for example ```/stores/*```.
 
 Works with any http method or ```router.all()```.
 
@@ -394,7 +394,7 @@ router.all('*', (req, res) => {
 
 ## Edge caching
 
-One of the awesome things about workers is the use of the caching API. 
+One of the most awesome things about workers is the use of the caching API. 
 
 https://developers.cloudflare.com/workers/runtime-apis/cache/
 
@@ -445,7 +445,7 @@ router.get('/test', async (req, res) => {
 
 Express-flare has full support for typescript using JSdoc types. 
 
-Take a look the codebase to see how we added types. (We got the pattern from Preact)
+Take a look at the codebase to see how we added types. (We got the pattern from Preact)
 
 JSdoc offers a great solution without the need for a TS build step. Meaning fast!
 
@@ -459,7 +459,7 @@ const use = (callback) => {
 ```
 
 ## Worker fetch params
-For convenience ```express-flare``` will pass all worker params to your routes.
+For convenience ```express-flare``` will pass all worker params to your routes via ```req```.
 
 Example:
 ```js
