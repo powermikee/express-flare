@@ -7,6 +7,9 @@
     "cloudflare",
     "workers",
     "express",
+    "expressjs",
+    "middleware",
+    "caching",
     "serverless",
     "API",
     "router"
