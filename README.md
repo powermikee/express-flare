@@ -218,7 +218,7 @@ router.get('/test', async (req, res) => {
 
 For convenience ```express-flare``` will parse the body content and return a value to ```req.bodyContent```. 
 
-This is what you need is most cases and works similar to express.
+This is what you need in most cases and works similar to express.
 
 If you want access to the original unparsed body stream you can access ```req.body```.
 
@@ -415,13 +415,13 @@ router.all('*', (req, res) => {
 
 ## Edge caching
 
-One of the most awesome things about workers is the use of the caching API. 
+One of the most awesome things about workers is the use of the cache API. 
 
 https://developers.cloudflare.com/workers/runtime-apis/cache/
 
 Express-flare handles caching for you, so you don't have to.
 
-All caching is defined in seconds.
+**Note: All cache times are defined in seconds.**
 
 There are 2 ways to set the cache. 
 
@@ -505,7 +505,7 @@ Fetch params are particularly useful with modules where you need to pass env var
 Example:
 ```js
 router.get('/test', async (req, res) => {
-  const { env } = req;
+  const { env, context } = req;
 
   if(!env.JWT) {
     res.json({ allowed: false });
