@@ -78,7 +78,7 @@ You should be to copy and paste most of your express code and it should just wor
 Examples:
 
 ```js
-router.get('/red', async (req, res) => {
+router.get('/red', (req, res) => {
   res.json({ worked: true });
 });
 
@@ -109,21 +109,21 @@ Route params and query params work the same as express.
 
 ```js
 // example: /stores/23
-router.get('/stores/:id', async (req, res) => {
+router.get('/stores/:id', (req, res) => {
   const { id } = req.params;
 
   res.json({ worked: true });
 });
 
 // example: /stores/product/5
-router.get('/stores/product/:id', async (req, res) => {
+router.get('/stores/product/:id', (req, res) => {
   const { id } = req.params;
 
   res.json({ worked: true });
 });
 
 // example: /stores?name=chicago
-router.get('/stores', async (req, res) => {
+router.get('/stores', (req, res) => {
   const { name } = req.query;
   
   res.json({ worked: true });
@@ -137,7 +137,7 @@ Here are some examples of supported response methods.
 ### res.status(statusCode: number):
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.status(200).json({ worked: true });
 });
 ```
@@ -146,7 +146,7 @@ router.get('/test', async (req, res) => {
 This method will also add the json content headers.
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.json({ worked: true });
 });
 ```
@@ -154,7 +154,7 @@ router.get('/test', async (req, res) => {
 ### res.send(text: string):
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.send('All done!');
 });
 ```
@@ -166,7 +166,7 @@ Cloudflare requires absolute URLs for redirects. So relative paths like ```/stor
 Express-flare provides the url base in ```req.origin``` for convenience.
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.redirect(`${req.origin}/stores`, 301);
 });
 ```
@@ -174,7 +174,7 @@ router.get('/test', async (req, res) => {
 ### res.end(text: string):
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.end('Failed');
 });
 ```
@@ -182,7 +182,7 @@ router.get('/test', async (req, res) => {
 ### res.setHeader(name: string, value: string):
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 });
 ```
@@ -190,11 +190,11 @@ router.get('/test', async (req, res) => {
 ### res.setCookie(name: string, value: string, options: object):
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.setCookie('name', 'value');
 });
 
-router.get('/another', async (req, res) => {
+router.get('/another', (req, res) => {
   res.setCookie('name', 'value', {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7 // 1 week
@@ -205,7 +205,7 @@ router.get('/another', async (req, res) => {
 ### res.removeHeader(name: string):
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.removeHeader('Content-Type');
 });
 ```
@@ -213,7 +213,7 @@ router.get('/test', async (req, res) => {
 ### Method chaining:
 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res
     .status(200)
     .setHeader('Access-Control-Allow-Origin', '*')
@@ -230,7 +230,7 @@ This is what you need in most cases and works similar to express.
 If you want access to the original unparsed body stream you can access ```req.body```.
 
 ```js
-router.post('/test', async (req, res) => {
+router.post('/test', (req, res) => {
   const body = req.bodyContent;
 
   res.send('Success!');
@@ -241,7 +241,7 @@ router.post('/test', async (req, res) => {
 
 Get cookie:
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   const { jwt } = req.cookies;
 
   res.send('Success!');
@@ -250,11 +250,11 @@ router.get('/test', async (req, res) => {
 
 Set cookie:
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.setCookie('name', 'value').send('Success!');
 });
 
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.setCookie('name', 'value', {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7 // 1 week
@@ -332,7 +332,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
   res.json({ success: true });
 });
 ```
@@ -528,7 +528,7 @@ So for example with the below route, it would have a cache of 4000 seconds and a
 
 Example: 
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   res.json({ worked: true });
 }, 4000);
 ```
@@ -555,7 +555,7 @@ For convenience ```express-flare``` will pass all worker params to your routes v
 
 Example:
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   const { event } = req;
 
   res.json({ worked: true });
@@ -575,7 +575,7 @@ Fetch params are particularly useful with modules where you need to pass env var
 
 Example:
 ```js
-router.get('/test', async (req, res) => {
+router.get('/test', (req, res) => {
   const { env, context } = req;
 
   if(!env.JWT) {
