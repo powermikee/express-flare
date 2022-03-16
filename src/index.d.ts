@@ -11,10 +11,11 @@ interface FetchEventType extends FetchEvent {
 export interface HandleRequestType {
   event: FetchEventType,
   context?: any,
-  request?: any,
+  request?: RequestType,
   router: RouterType,
   cacheTime?: number,
   parseCookie?: boolean,
+  env?: any,
 }
 
 export interface ResponseMethodType {
@@ -49,6 +50,9 @@ export interface RequestType extends Request {
   params?: any,
   bodyContent?: any,
   cookies?: any,
+  env?: any,
+  event?: FetchEventType,
+  context?: any,
   [key: string]: any,
 }
 
@@ -59,7 +63,11 @@ export type ErrorCallbackType = (
   next: NextType,
 ) => void;
 
-export type CallbackType = (req: RequestType, res: ResponseMethodType, next: NextType) => void;
+export type CallbackType = (
+  req: RequestType, 
+  res: ResponseMethodType, 
+  next: NextType,
+) => void;
 
 export type EndpointType = (
   path: string,

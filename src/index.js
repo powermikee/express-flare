@@ -16,6 +16,7 @@ const handleRequest = async ({
   cacheTime: globalCacheTime = 0,
   parseCookie = true,
   context = null,
+  env = null,
 }) => {
   const req = request || event.request;
   const eventObj = context || event;
@@ -48,6 +49,9 @@ const handleRequest = async ({
   req.query = queryparams;
   req.params = params;
   req.bodyContent = methodLower === 'post' ? await getBody(req) : null;
+  req.event = event;
+  req.context = context;
+  req.env = env;
 
   if (parseCookie) {
     req.cookies = parse(req.headers.get('Cookie') || '');
