@@ -1,5 +1,7 @@
 # Express-flare
 
+**Express inspired routing for Cloudflare Workers.**
+
 Cloudflare Workers are absolutely incredible!
 
 One of the hardest things of building in workers though is handling API routes.
