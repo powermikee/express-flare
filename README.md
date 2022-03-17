@@ -551,6 +551,45 @@ router.post('/test', (req, res) => {
 });
 ```
 
+### Custom cache key
+
+Normally ```express-flare``` will use the full URL as a cache key. 
+
+For some scenarios this may not be specific enough. For example you may want to cache different data for different accounts even though the endpoint is the same.
+
+For convenience express-flare allows you pass a function to ```handleRequest``` to create a custom cache key.
+
+The cache key must be a full URL. A good idea is to add # after the URL with some data.
+
+Example: 
+```js
+// this route will have a cache key of ${req.origin}/cache#${userId}
+router.get('/cache', (req, res) => {
+  res.json({ success: true });
+}, 4000);
+
+router.post('/cache', (req, res) => {
+  // we use the same pattern to invalidate the cache
+  const url = `${req.origin}/cache#${req.userId}`;
+
+  caches.default.delete(url);
+
+  res.json({ success: true });
+});
+
+addEventListener('fetch', (event) => {
+  event.respondWith(handleRequest({
+    event,
+    router,
+    cacheTime: 0,
+    // we can add the userId to the end of the url
+    // for a more specific cache key
+    getCacheKey: (req) => `${req.url}#${req.userId}`,
+  }));
+});
+```
+
+
 ## Typescript support
 
 Express-flare has full support for typescript using JSdoc types. 
