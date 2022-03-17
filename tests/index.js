@@ -80,6 +80,14 @@ router.get('/cache', (req, res) => {
   res.json({ success: true });
 }, 4000);
 
+router.post('/cache', (req, res) => {
+  const url = `${req.origin}/cache`;
+
+  caches.default.delete(url);
+
+  res.json({ success: true });
+}, 4000);
+
 router.get('/error', (req, res, next) => {
   next('failed');
 }, (req, res) => {

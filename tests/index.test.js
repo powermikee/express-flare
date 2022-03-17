@@ -118,6 +118,24 @@ test('should return cache hit', async () => {
   expect(contentType).toBe('application/json');
 });
 
+test('should invalidate cache', async () => {
+  await axios.post('http://localhost:8787/cache');
+
+  const response = await axios.get('http://localhost:8787/cache');
+
+  const { data, status, headers: { 
+    'cache-control': cacheControl, 
+    'content-type': contentType,
+    'cf-cache-status': cacheStatus,
+  }} = response;
+
+  expect(data).toStrictEqual({ success: true });
+  expect(status).toBe(200);
+  expect(cacheControl).toBe('max-age=4000');
+  expect(cacheStatus).toBe(undefined);
+  expect(contentType).toBe('application/json');
+});
+
 test('should call error handler', async () => {
   try {
     const response = await axios.get('http://localhost:8787/error');
@@ -246,7 +264,7 @@ test('should call catch all wildcard route', async () => {
   expect(contentType).toBe('application/json');
 });
 
-test('should be caught by wildcard route', async () => {
+test('should not be caught by wildcard route', async () => {
   const response = await axios.put('http://localhost:8787/random');
   const { data, status, headers: { 
     'cache-control': cacheControl, 
