@@ -548,7 +548,7 @@ router.post('/test', (req, res) => {
   caches.default.delete(url);
 
   res.json({ worked: true });
-}, 4000);
+});
 ```
 
 ## Typescript support
