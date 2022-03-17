@@ -69,10 +69,10 @@ router.get('/middleware-time', (req, res, next) => {
 
   next();
 }, (req, res) => {
-  const { middlewares } = req;
+  const { middlewares: mw } = req;
 
   res.json({
-    middlewares,
+    middlewares: mw,
   });
 });
 
@@ -144,6 +144,7 @@ router.get('/redirect', (req, res) => {
   res.redirect(`${req.origin}/end`, 301);
 });
 
+// eslint-disable-next-line
 addEventListener('fetch', (event) => {
   middlewares = [];
 

@@ -1,3 +1,4 @@
+// This webpack file is only used to build the tests
 const path = require('path');
 
 const config = {

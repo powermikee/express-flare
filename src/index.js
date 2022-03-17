@@ -65,6 +65,7 @@ const handleRequest = async ({
 
   let middlewareDone = false;
 
+  /** @param {any} error */
   const setMiddleWareDone = async (error) => {
     if (error && errorHandler) {
       await errorHandler(error, req, res, setMiddleWareDone);
