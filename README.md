@@ -535,6 +535,22 @@ router.get('/test', (req, res) => {
 }, 4000);
 ```
 
+### Purging cache
+
+You can invalidate the cache by deleting the URL from the cache store.
+
+Example: 
+```js
+router.post('/test', (req, res) => {
+  const url = `${req.origin}/test`;
+
+  // this will invalidate the cache of router.get('/test')
+  caches.default.delete(url);
+
+  res.json({ worked: true });
+}, 4000);
+```
+
 ## Typescript support
 
 Express-flare has full support for typescript using JSdoc types. 
