@@ -18,6 +18,7 @@ export interface HandleRequestType {
   cacheTime?: number,
   parseCookie?: boolean,
   env?: any,
+  getCacheKey?: (req: RequestType) => string;
 }
 
 export interface ResponseMethodType {

@@ -1,5 +1,7 @@
 const { parse } = require('cookie');
-const { getBody, getQueryParams, getRoute } = require('./lib/utils');
+const {
+  getBody, getQueryParams, getRoute, getDefaultCacheKey,
+} = require('./lib/utils');
 const {
   res, getResponse, resetResponse, updateHeaders,
 } = require('./lib/response');
@@ -17,6 +19,7 @@ const handleRequest = async ({
   parseCookie = true,
   context = null,
   env = null,
+  getCacheKey,
 }) => {
   const req = request || event.request;
   const eventObj = context || event;
@@ -28,7 +31,6 @@ const handleRequest = async ({
   const errorHandler = routes.error;
   const queryparams = getQueryParams(search);
   const cache = caches.default;
-  const cachedResponse = await cache.match(req);
   const {
     pathMatch,
     callback,
@@ -37,6 +39,7 @@ const handleRequest = async ({
     middleware,
   } = getRoute(routes, methodLower, pathname);
   const cacheTime = typeof routeCacheTime !== 'undefined' ? routeCacheTime : globalCacheTime;
+  let cacheKey = new Request(req.url, req);
 
   if (middleware) {
     middlewareArr.push(middleware);
@@ -48,10 +51,13 @@ const handleRequest = async ({
   req.origin = origin;
   req.query = queryparams;
   req.params = params;
-  req.bodyContent = methodLower === 'post' || methodLower === 'put' ? await getBody(req) : null;
   req.event = event;
   req.context = context;
   req.env = env;
+
+  if (methodLower === 'post' || methodLower === 'put') {
+    req.bodyContent = await getBody(req);
+  }
 
   if (parseCookie) {
     req.cookies = parse(req.headers.get('Cookie') || '');
@@ -96,17 +102,20 @@ const handleRequest = async ({
   if (pathMatch) {
     if (mwCount > 0) {
       await runMiddleware();
+    }
 
-      if (middlewareDone) {
+    if (middlewareDone) {
+      if (methodLower === 'get') {
+        const cacheKeyFunc = getCacheKey || getDefaultCacheKey;
+        const cacheUrl = new URL(cacheKeyFunc(req));
+
+        cacheKey = new Request(cacheUrl.toString(), req);
+
+        const cachedResponse = cacheKey && await cache.match(cacheKey);
+
         if (cacheTime > 0 && cachedResponse) {
           return cachedResponse;
         }
-
-        await callback(req, res, eventObj);
-      }
-    } else {
-      if (cacheTime > 0 && cachedResponse) {
-        return cachedResponse;
       }
 
       await callback(req, res, eventObj);
@@ -118,7 +127,7 @@ const handleRequest = async ({
       : new Response(response.data, response.headers);
 
     if (cacheTime > 0 && methodLower === 'get') {
-      eventObj.waitUntil(cache.put(req, finalResponse.clone()));
+      eventObj.waitUntil(cache.put(cacheKey, finalResponse.clone()));
     }
 
     return finalResponse;

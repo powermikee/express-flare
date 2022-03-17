@@ -156,7 +156,14 @@ const getRoute = (routes, method, pathname) => {
   return route;
 };
 
+/**
+ * @param { import('../index.d').RequestType } req
+ * @return string
+ */
+const getDefaultCacheKey = (req) => req.url;
+
 module.exports = {
+  getDefaultCacheKey,
   getQueryParams,
   getBody,
   checkRoute,

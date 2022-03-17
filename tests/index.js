@@ -13,6 +13,8 @@ router.error((error, req, res, next) => {
 router.use((req, res, next) => {
   req.middleware1 = true;
 
+  req.userId = 1;
+
   middlewares.push('mw1');
 
   req.middlewares = middlewares;
@@ -81,7 +83,7 @@ router.get('/cache', (req, res) => {
 }, 4000);
 
 router.post('/cache', (req, res) => {
-  const url = `${req.origin}/cache`;
+  const url = `${req.origin}/cache#${req.userId}`;
 
   caches.default.delete(url);
 
@@ -160,5 +162,6 @@ addEventListener('fetch', (event) => {
     event,
     router,
     cacheTime: 0,
+    getCacheKey: (req) => `${req.url}#${req.userId}`,
   }));
 });
