@@ -484,7 +484,7 @@ router.all('*', (req, res) => {
 });
 ```
 
-Note: express-flare doesn't mind the ordering of wildcard routes, they will always run last. With wildcard with methods eg. ```router.get('*')``` running before ```router.all('*')```.
+Note: express-flare doesn't mind the ordering of wildcard routes, they will always run last. Wildcards with methods eg. ```router.get('*')``` will always run before ```router.all('*')```.
 
 ## Edge caching
 
