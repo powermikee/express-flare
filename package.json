@@ -1,6 +1,6 @@
 {
   "name": "express-flare",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "main": "src/index.js",
   "description": "A lightweight wrapper inspired by expressjs that simplifies working with Cloudflare workers.",
   "keywords": [
