@@ -589,7 +589,6 @@ addEventListener('fetch', (event) => {
 });
 ```
 
-
 ## Typescript support
 
 Express-flare has full support for typescript using JSdoc types. 
@@ -657,6 +656,60 @@ export default {
   },
 }
 ```
+
+## Cloudflare workers limitations
+
+Due to their nature workers are built on Promises, so ```express-flare``` is built entirely with promises.
+
+This means that callback style code won't work. The recommend way to write apis with workers is to use async await.
+
+Following are some examples.
+
+This won't work:
+```js
+// the worker won't wait for the timeout to finish
+router.get('/test', (req, res) => {
+  setTimeout(() => {
+    res.json({ success: true });
+  }, 1000);
+});
+```
+
+Use this instead:
+```js
+const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
+router.get('/test', async (req, res) => {
+  await delay(1000);
+
+  res.json({ success: true });
+});
+```
+
+If you are accustomed to using ```.then()``` that also won't work as that is basically using callbacks.
+
+This won't work:
+```js
+router.get('/test', (req, res) => {
+  fetch('http://example.com')
+    .then(() => {
+      res.json({ success: true });
+    });
+});
+```
+
+Use this instead:
+```js
+router.get('/test', async (req, res) => {
+  await fetch('http://example.com');
+
+  res.json({ success: true });
+});
+```
+
+If you need a package to help convert functions into promises similar to ```util.promisify()``` in nodejs we recommend:
+
+https://github.com/mikehall314/es6-promisify
 
 ## Contributing
 
