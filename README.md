@@ -632,7 +632,9 @@ Fetch params are particularly useful with modules where you need to pass env var
 Example:
 ```js
 router.get('/test', (req, res) => {
-  const { env, context } = req;
+  // NOTE: context is defined as ctx
+  // since cloudflare pages functions uses req.context internally
+  const { env, ctx } = req;
 
   if(!env.JWT) {
     return res.json({ allowed: false });
