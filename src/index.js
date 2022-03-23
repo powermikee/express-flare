@@ -104,7 +104,7 @@ const handleRequest = async ({
       await runMiddleware();
     }
 
-    if (middlewareDone) {
+    if (middlewareDone || mwCount === 0) {
       if (methodLower === 'get') {
         const cacheKeyFunc = getCacheKey || getDefaultCacheKey;
         const cacheUrl = new URL(cacheKeyFunc(req));
