@@ -52,7 +52,7 @@ const handleRequest = async ({
   req.query = queryparams;
   req.params = params;
   req.event = event;
-  req.context = context;
+  req.context = { ...context };
   req.env = env;
 
   if (methodLower === 'post' || methodLower === 'put') {
