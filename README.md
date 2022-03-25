@@ -210,6 +210,30 @@ router.get('/test', (req, res) => {
 });
 ```
 
+### res.render(html: string):
+
+Note: This method only allows for very simple HTML rendering with inline CSS and JS. No images since there is no asset management.
+
+For something more feature full use cloudflare pages.
+
+https://pages.cloudflare.com
+
+```js
+router.get('/', (req, res) => {
+  res.render(`
+    <html lang="en">
+      <head>
+        <title>Welcome Page</title>
+      </head>
+
+      <body>
+        <h1>edge-sql</h1>
+      </body>
+    </html>
+  `);
+});
+```
+
 ### Method chaining:
 
 ```js

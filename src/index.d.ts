@@ -31,6 +31,7 @@ export interface ResponseMethodType {
   removeHeader: (header: string) => ResponseMethodType,
   setCookie: (name: string, value: string, options: CookieSerializeOptions) => ResponseMethodType,
   redirect: (url: string, statusCode: number) => ResponseMethodType,
+  render: (data: string) => ResponseMethodType,
 }
 
 export type NextType = (error?: Error) => void;

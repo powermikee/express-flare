@@ -308,3 +308,15 @@ test('should redirect', async () => {
   expect(cacheControl).toBe('max-age=0');
   expect(contentType).toBe('text/plain;charset=UTF-8');
 });
+
+
+test('should render page', async () => {
+  const response = await axios.get('http://localhost:8787/render');
+  const { data, status, headers: { 
+    'content-type': contentType,
+  }} = response;
+
+  expect(data).toBe('<div>Test page</div>');
+  expect(status).toBe(200);
+  expect(contentType).toBe('text/html');
+});

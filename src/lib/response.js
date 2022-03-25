@@ -86,6 +86,15 @@ const res = {
 
     return this;
   },
+  render(data) {
+    updateHeaders({
+      'Content-Type': 'text/html',
+    });
+
+    response.data = data;
+
+    return this;
+  },
 };
 
 const resetResponse = () => {

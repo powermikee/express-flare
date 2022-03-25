@@ -154,6 +154,10 @@ router.get('/redirect', (req, res) => {
   res.redirect(`${req.origin}/end`, 301);
 });
 
+router.get('/render', (req, res) => {
+  res.render('<div>Test page</div>');
+});
+
 // eslint-disable-next-line
 addEventListener('fetch', (event) => {
   middlewares = [];
