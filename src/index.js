@@ -60,7 +60,7 @@ const handleRequest = async ({
   }
 
   if (parseCookie) {
-    req.cookies = parse(req.headers.get('Cookie') || '');
+    req.cookie = parse(req.headers.get('Cookie') || '');
   }
 
   resetResponse();
