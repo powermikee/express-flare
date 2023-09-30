@@ -30,7 +30,7 @@ const handleRequest = async ({
   const middlewareArr = [...routes.middleware];
   const errorHandler = routes.error;
   const queryparams = getQueryParams(search);
-  const cache = caches.default;
+  const cache = typeof caches !== 'undefined' ? caches.default : null;
   const {
     pathMatch,
     callback,
@@ -111,7 +111,7 @@ const handleRequest = async ({
 
         cacheKey = new Request(cacheUrl.toString(), req);
 
-        const cachedResponse = cacheKey && await cache.match(cacheKey);
+        const cachedResponse = cacheKey && cache && await cache.match(cacheKey);
 
         if (cacheTime > 0 && cachedResponse) {
           return cachedResponse;
@@ -126,7 +126,7 @@ const handleRequest = async ({
       ? Response.redirect(response.redirect.url, response.redirect.statusCode)
       : new Response(response.data, response.headers);
 
-    if (cacheTime > 0 && methodLower === 'get') {
+    if (cache && cacheTime > 0 && methodLower === 'get') {
       eventObj.waitUntil(cache.put(cacheKey, finalResponse.clone()));
     }
 
