@@ -117,7 +117,7 @@ router.patch('/patch', (req, res) => {
 });
 
 router.get('/get-cookies', (req, res) => {
-  const { cookie1, cookie2 } = req.cookies;
+  const { cookie1, cookie2 } = req.cookie;
 
   res.json({ cookie1, cookie2 });
 });

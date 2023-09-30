@@ -266,7 +266,7 @@ router.post('/test', (req, res) => {
 Get cookie:
 ```js
 router.get('/test', (req, res) => {
-  const { jwt } = req.cookies;
+  const { jwt } = req.cookie;
 
   res.send('Success!');
 });
