@@ -11,7 +11,7 @@ interface FetchEventType extends FetchEvent {
 }
 
 export interface HandleRequestType {
-  event: FetchEventType,
+  event?: FetchEventType,
   context?: any,
   request?: RequestType,
   router: RouterType,
@@ -104,6 +104,8 @@ export type EndpointType = (
   all: EndpointType,
 }
 
+export type RouterFunctionType = () => RouterReturnType;
+
 export function handleRequest (props: HandleRequestType): Promise<Response>;
 
-export const router: RouterType;
+export const router: RouterFunctionType;

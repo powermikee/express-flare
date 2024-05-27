@@ -59,17 +59,21 @@ const methodBuilder = (method) => {
   };
 };
 
-/** @type { import('../index.d').RouterType } */
-const router = {
-  routes,
-  use,
-  error,
-  get: methodBuilder('get'),
-  post: methodBuilder('post'),
-  put: methodBuilder('put'),
-  delete: methodBuilder('delete'),
-  patch: methodBuilder('patch'),
-  all: methodBuilder('all'),
+/** @type { import('../index.d').RouterFunctionType } */
+const router = () => {
+  routes.middleware = [];
+
+  return {
+    routes,
+    use,
+    error,
+    get: methodBuilder('get'),
+    post: methodBuilder('post'),
+    put: methodBuilder('put'),
+    delete: methodBuilder('delete'),
+    patch: methodBuilder('patch'),
+    all: methodBuilder('all'),
+  };
 };
 
 module.exports = router;

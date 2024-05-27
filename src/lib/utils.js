@@ -27,16 +27,36 @@ const getBody = async (request) => {
 
   if (contentType.includes('form')) {
     const formData = await request.formData();
+
     /** @type {{[key: string]: any}} */
     const body = {};
 
     Array.from(formData.entries()).forEach((entry) => {
       const [key, value] = entry;
+      const isArray = key.indexOf('[]') > -1;
+      const cleanKey = isArray ? key.replace('[]', '') : key;
+      const hasKey = Object.prototype.hasOwnProperty.call(body, cleanKey);
 
-      body[key] = value;
+      if (!isArray && hasKey) {
+        const savedValue = body[cleanKey];
+
+        if (!Array.isArray(body[cleanKey])) {
+          body[cleanKey] = [savedValue];
+        }
+
+        body[cleanKey].push(value);
+      } else if (isArray) {
+        if (!hasKey) {
+          body[cleanKey] = [];
+        }
+
+        body[cleanKey].push(value);
+      } else {
+        body[cleanKey] = value;
+      }
     });
 
-    return JSON.stringify(body);
+    return body;
   }
 
   const myBlob = await request.blob();

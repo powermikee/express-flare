@@ -21,11 +21,13 @@ Replace your handler and pass in your router:
 ```js
 import { handleRequest, router } from 'express-flare';
 
-router.get('/', (req, res) => {
+const appRouter = router();
+
+appRouter.get('/', (req, res) => {
   res.json({ success: true });
 });
 
-router.post('/', (req, res) => {
+appRouter.post('/', (req, res) => {
   const body = req.bodyContent;
 
   res.json({ success: true });
@@ -34,7 +36,7 @@ router.post('/', (req, res) => {
 addEventListener('fetch', (event) => {
   event.respondWith(handleRequest({
     event,
-    router,
+    router: appRouter,
   }));
 });
 ```
@@ -48,7 +50,9 @@ const { handleRequest, router } = require('express-flare');
 ```js
 import { handleRequest, router } from 'express-flare';
 
-router.get('/', (req, res) => {
+const appRouter = router()
+
+appRouter.get('/', (req, res) => {
   res.json({ success: true });
 });
 
@@ -59,7 +63,7 @@ export default {
         request,
         env,
         context,
-        router,
+        router: appRouter,
       });
     } catch (e) {
       return new Response(e.message)
@@ -260,6 +264,8 @@ router.post('/test', (req, res) => {
   res.send('Success!');
 });
 ```
+
+When form data is send to the post route with an array field "users[]" `express-flare` will parse it as an array.
 
 ## Cookies
 

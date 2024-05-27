@@ -21,6 +21,7 @@ const handleRequest = async ({
   env = null,
   getCacheKey,
 }) => {
+  // @ts-ignore
   const req = request || event.request;
   const eventObj = context || event;
   const { url, method } = req;

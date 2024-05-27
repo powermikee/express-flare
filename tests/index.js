@@ -1,6 +1,8 @@
-const { handleRequest, router } = require('../src/index');
+const { handleRequest, router: routerLib } = require('../src/index');
 
 let middlewares = [];
+
+const router = routerLib();
 
 router.error((error, req, res, next) => {
   if (error) {
