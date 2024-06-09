@@ -49,12 +49,12 @@ const methodBuilder = (method) => {
     const cleanPath = getCleanPath(path);
     const middleware = typeof arg2 === 'function' ? arg1 : null;
     const callback = typeof arg2 === 'function' ? arg2 : arg1;
-    const cacheTime = typeof arg2 === 'function' ? arg3 : arg2;
+    const routeConfig = typeof arg2 === 'function' ? arg3 : arg2;
 
     routes[method][cleanPath] = {
       callback,
       middleware,
-      cacheTime,
+      routeConfig,
     };
   };
 };
