@@ -93,14 +93,14 @@ const checkRoute = (routesObj, pathname) => {
     const routeArr = route.replace(/\/$/, '').split('/');
 
     if (route === pathname) {
-      const { callback, cacheTime, middleware } = routesObj[pathname];
+      const { callback, routeConfig, middleware } = routesObj[pathname];
 
       matchingPath = {
         pathMatch: true,
         callback,
         params,
         middleware,
-        cacheTime,
+        routeConfig,
       };
     } else if (!matchingPath && route.indexOf('/:') > -1 && routeArr.length === pathArr.length) {
       for (let i = 0; i < routeArr.length; i += 1) {
@@ -118,13 +118,13 @@ const checkRoute = (routesObj, pathname) => {
         }
 
         if (i === (routeArr.length - 1)) {
-          const { callback, cacheTime, middleware } = routesObj[route];
+          const { callback, routeConfig, middleware } = routesObj[route];
 
           matchingPath = {
             pathMatch: true,
             callback,
             params,
-            cacheTime,
+            routeConfig,
             middleware,
           };
         }
@@ -137,13 +137,13 @@ const checkRoute = (routesObj, pathname) => {
   }
 
   if (!matchingPath && typeof routesObj['*'] !== 'undefined') {
-    const { callback, cacheTime, middleware } = routesObj['*'];
+    const { callback, routeConfig, middleware } = routesObj['*'];
 
     return {
       pathMatch: true,
       callback,
       params,
-      cacheTime,
+      routeConfig,
       middleware,
     };
   }
@@ -152,7 +152,7 @@ const checkRoute = (routesObj, pathname) => {
     pathMatch: false,
     callback: null,
     params,
-    cacheTime: 0,
+    routeConfig: null,
     middleware: null,
   };
 };
