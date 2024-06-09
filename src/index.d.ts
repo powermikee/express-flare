@@ -73,11 +73,16 @@ export type CallbackType = (
   next: NextType,
 ) => void;
 
+export type RouteConfigType = {
+  cacheTime?: number,
+  parseBody?: boolean
+};
+
 export type EndpointType = (
   path: string,
   callback: CallbackType,
-  callback2?: CallbackType,
-  cacheTime?: number
+  callback2?: CallbackType | RouteConfigType,
+  routeConfig?: RouteConfigType
  ) => void;
 
  export interface RoutesType {
