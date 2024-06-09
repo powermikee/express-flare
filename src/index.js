@@ -36,7 +36,10 @@ const handleRequest = async ({
     pathMatch,
     callback,
     params,
-    cacheTime: routeCacheTime,
+    routeConfig: {
+      cacheTime: routeCacheTime,
+      parseBody = true
+    },
     middleware,
   } = getRoute(routes, methodLower, pathname);
   const cacheTime = typeof routeCacheTime !== 'undefined' ? routeCacheTime : globalCacheTime;
@@ -56,7 +59,7 @@ const handleRequest = async ({
   req.ctx = context;
   req.env = env;
 
-  if (methodLower === 'post' || methodLower === 'put') {
+  if (parseBody && (methodLower === 'post' || methodLower === 'put')) {
     req.bodyContent = await getBody(req);
   }
 
