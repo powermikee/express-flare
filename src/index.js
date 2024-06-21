@@ -71,7 +71,7 @@ const handleRequest = async ({
   resetResponse();
 
   updateHeaders({
-    'cache-control': `max-age=${cacheTime}`,
+    'cache-control': `public, max-age=${cacheTime} s-maxage=${cacheTime}'`,
   });
 
   let middlewareDone = false;
@@ -131,7 +131,7 @@ const handleRequest = async ({
       ? Response.redirect(response.redirect.url, response.redirect.statusCode)
       : new Response(response.data, response.headers);
 
-    if (cache && cacheTime > 0 && methodLower === 'get') {
+    if (eventObj && cache && cacheTime > 0 && methodLower === 'get') {
       eventObj.waitUntil(cache.put(cacheKey, finalResponse.clone()));
     }
 
