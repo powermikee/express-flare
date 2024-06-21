@@ -71,7 +71,7 @@ const handleRequest = async ({
   resetResponse();
 
   updateHeaders({
-    'cache-control': `public, max-age=${cacheTime} s-maxage=${cacheTime}'`,
+    'cache-control': `public, max-age=${cacheTime} s-maxage=${cacheTime}`,
   });
 
   let middlewareDone = false;
