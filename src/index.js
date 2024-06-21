@@ -37,12 +37,12 @@ const handleRequest = async ({
     callback,
     params,
     routeConfig: {
-      cacheTime: routeCacheTime,
+      cacheTime: routeCacheTime = globalCacheTime,
       parseBody = true,
     },
     middleware,
   } = getRoute(routes, methodLower, pathname);
-  const cacheTime = typeof routeCacheTime !== 'undefined' ? routeCacheTime : globalCacheTime;
+  const cacheTime = routeCacheTime;
   let cacheKey = new Request(req.url, req);
 
   if (middleware) {
