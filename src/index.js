@@ -44,6 +44,7 @@ const handleRequest = async ({
   } = getRoute(routes, methodLower, pathname) || {}; // Default value for the entire destructuring
 
   const cacheTime = routeCacheTime;
+  let cacheKey = new Request(req.url, req);
 
   if (middleware) {
     middlewareArr.push(middleware);
