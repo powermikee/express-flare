@@ -38,7 +38,7 @@ const handleRequest = async ({
     params,
     routeConfig: {
       cacheTime: routeCacheTime,
-      parseBody = true
+      parseBody = true,
     },
     middleware,
   } = getRoute(routes, methodLower, pathname);
