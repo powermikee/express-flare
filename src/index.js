@@ -39,11 +39,11 @@ const handleRequest = async ({
     routeConfig: {
       cacheTime: routeCacheTime = globalCacheTime,
       parseBody = true,
-    },
+    } = {}, // Default value for routeConfig
     middleware,
-  } = getRoute(routes, methodLower, pathname);
+  } = getRoute(routes, methodLower, pathname) || {}; // Default value for the entire destructuring
+
   const cacheTime = routeCacheTime;
-  let cacheKey = new Request(req.url, req);
 
   if (middleware) {
     middlewareArr.push(middleware);
