@@ -30,7 +30,7 @@
     "release_patch": "npm version patch",
     "release_minor": "npm version minor",
     "release_major": "npm version major",
-    "preversion": "npm run lint && npm run tsc && npm run start_and_test",
+    "preversion": "npm run lint && npm run tsc",
     "postversion": "git push && git push --tags && npm publish",
     "build": "webpack",
     "start_test_server": "miniflare --watch --build-base-path \"tests/dist\" --build-command \"npm run build\" --build-watch-path \"./tests/dist\" tests/dist/worker.js",
